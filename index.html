@@ -4,63 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的实时天气站</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* 背景图：这里使用你上传的那张图 */
-            background: url('https://github.com/user-attachments/assets/51352e85-3647-49f9-bd8f-f14f9da76f9d') no-repeat center center/cover;
-            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            overflow: hidden;
-        }
+   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* 修改这里：直接读取仓库里的 bg.jpg */
+        background: url('bg.jpg') no-repeat center center/cover;
+        font-family: 'PingFang SC', sans-serif;
+        background-color: #1a1a1a; /* 兜底颜色，万一图片加载失败显示深色 */
+    }
 
-        /* 毛玻璃容器 */
-        .glass-card {
-            width: 85%;
-            max-width: 500px;
-            padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.15); /* 半透明白色 */
-            backdrop-filter: blur(15px);           /* 核心：模糊效果 */
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 40px;                  /* 圆角方框 */
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            text-align: center;
-            color: white;
-        }
+    .glass-card {
+        width: 85%;
+        max-width: 450px;
+        padding: 50px 20px;
+        /* 增强透明感：调整颜色为半透明白 */
+        background: rgba(255, 255, 255, 0.1); 
+        backdrop-filter: blur(20px); /* 磨砂感核心 */
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        text-align: center;
+        color: #ffffff; /* 确保文字是纯白色 */
+    }
 
-        .temp {
-            font-size: 6rem;
-            font-weight: 300;
-            margin-bottom: 5px;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
+    .temp { font-size: 5.5rem; font-weight: 200; margin-bottom: 10px; }
+    .location { font-size: 1.2rem; opacity: 0.8; margin-bottom: 30px; letter-spacing: 5px; }
+    .status-pill { 
+        display: inline-block; 
+        background: rgba(0, 0, 0, 0.3); /* 胶囊透明度 */
+        padding: 6px 20px; 
+        border-radius: 20px; 
+        font-size: 0.9rem; 
+    }
+    .update-time { font-size: 0.7rem; opacity: 0.5; margin-top: 40px; }
 
-        .location {
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-
-        .status-pill {
-            display: inline-block;
-            background: rgba(0, 0, 0, 0.4);      /* 黑色半透明胶囊 */
-            padding: 8px 25px;
-            border-radius: 25px;
-            font-size: 1rem;
-            margin-bottom: 30px;
-        }
-
-        .update-time {
-            font-size: 0.85rem;
-            opacity: 0.7;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
