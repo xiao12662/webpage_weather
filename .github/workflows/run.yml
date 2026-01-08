@@ -1,0 +1,32 @@
+name: GlassWeatherSiteUpdate
+
+on:
+  push:
+  schedule:
+    - cron: '20 00 * * *' # 每天北京时间 08:20
+
+permissions:
+  contents: write
+
+jobs:
+  update-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Run Update
+        env:
+          BARK_KEY: ${{ secrets.BARK_KEY }}
+        run: python index.py
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Weather-Bot"
+          git config --global user.email "bot@github.com"
+          git add index.html
+          git commit -m "Auto-update weather display" || echo "No changes"
+          git push
