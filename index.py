@@ -3,7 +3,11 @@ import os
 from datetime import datetime
 
 def get_weather_info(code):
-    code = int(code)
+    try:
+        c = int(code)
+    except:
+        return f"解析失败({code})", "⚠️"
+        
     weather_dict = {
         0: ("晴朗", "☀️"),
         1: ("晴间多云", "🌤️"),
@@ -16,37 +20,40 @@ def get_weather_info(code):
         71: ("小雪", "🌨️"),
         95: ("雷阵雨", "⛈️")
     }
-    return weather_dict.get(code, (f"代码:{code}", "🌈"))
+    return weather_dict.get(c, (f"未知代码:{c}", "🌈"))
 
 def main():
-    # 1. 抓取数据
+    # 1. 抓取
     url = "https://api.open-meteo.com/v1/forecast?latitude=28.23&longitude=112.94&current_weather=true"
     res = requests.get(url).json()
     curr = res['current_weather']
-    
+    temp = curr['temperature']
+    code = curr['weathercode']
+
     # 2. 翻译
-    status_text, emoji = get_weather_info(curr['weathercode'])
+    status_text, emoji = get_weather_info(code)
     weather_display = f"{emoji} {status_text}"
+    print(f"调试信息：当前天气是 {weather_display}")
 
-    # 3. 读取模板 (template.html)，而不是直接读 index.html
-    # 这样可以保证每次运行都有 {code} 可以被替换
-    if os.path.exists('template.html'):
-        with open('template.html', 'r', encoding='utf-8') as f:
-            content = f.read()
-    else:
-        # 如果你还没建 template.html，先用 index.html 顶替一次
-        with open('index.html', 'r', encoding='utf-8') as f:
-            content = f.read()
+    # 3. 读模板 (优先读 template.html)
+    target_file = 'template.html' if os.path.exists('template.html') else 'index.html'
+    with open(target_file, 'r', encoding='utf-8') as f:
+        content = f.read()
 
-    # 4. 替换
+    # 4. 替换 (注意：这里要确保模板里真的有这三个词)
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    content = content.replace('{temp}', str(curr['temperature']))
+    content = content.replace('{temp}', str(temp))
     content = content.replace('{code}', weather_display)
     content = content.replace('{update_time}', now)
 
-    # 5. 统一写回 index.html（这是展示给浏览器看的）
+    # 5. 强制写回 index.html
     with open('index.html', 'w', encoding='utf-8') as f:
         f.write(content)
+
+    # 6. 推送调试消息到手机
+    bark_key = os.getenv('BARK_KEY')
+    if bark_key:
+        requests.get(f"https://api.day.app/{bark_key}/机器人报告/网页已更新为：{weather_display}?level=active")
 
 if __name__ == "__main__":
     main()
