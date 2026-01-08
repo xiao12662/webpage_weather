@@ -25,8 +25,8 @@
     max-width: 450px;
     padding: 80px 20px;           /* 增加上下内边距，让内容更舒展 */
     background: transparent;      /* 关键：完全透明，不要任何背景色 */
-    backdrop-filter: blur(5px);   /* 稍微保留一点点模糊，增加质感，不想要可设为 0 */
-    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(0px);   /* 稍微保留一点点模糊，增加质感，不想要可设为 0 */
+    -webkit-backdrop-filter: blur(0px);
     border-radius: 60px;          /* 更大的圆角 */
     border: 2px solid rgba(255, 255, 255, 0.4); /* 稍微加粗边框，纯透明下边框才好看 */
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);    /* 减弱阴影 */
@@ -72,9 +72,9 @@
 <body>
     <div class="glass-card">
         <div class="temp">13.6°C</div>
-        <div class="location">长沙实时天气</div>
-        <div class="status-pill">天气代码: 0</div>
-        <div class="update-time">自动更新于: 2026-01-08 08:35:26</div>
+        <div class="location">长沙</div>
+        
+        <div class="update-time">自动更新于: 2026-01-08</div>
     </div>
 </body>
 </html>
