@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的实时天气站</title>
+   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* 修改这里：直接读取仓库里的 bg.jpg */
+        background: url('bg.jpg') no-repeat center center/cover;
+        font-family: 'PingFang SC', sans-serif;
+        background-color: #1a1a1a; /* 兜底颜色，万一图片加载失败显示深色 */
+    }
+
+    /* 找到 .glass-card 部分替换 */
+/* 找到 .glass-card 部分完全替换 */
+.glass-card {
+    width: 85%;
+    max-width: 450px;
+    padding: 80px 20px;           /* 增加上下内边距，让内容更舒展 */
+    background: transparent;      /* 关键：完全透明，不要任何背景色 */
+    backdrop-filter: blur(0px);   /* 稍微保留一点点模糊，增加质感，不想要可设为 0 */
+    -webkit-backdrop-filter: blur(0px);
+    border-radius: 60px;          /* 更大的圆角 */
+    border: 2px solid rgba(255, 255, 255, 0.4); /* 稍微加粗边框，纯透明下边框才好看 */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);    /* 减弱阴影 */
+    text-align: center;
+    color: white;
+}
+
+/* 调整温度数字的间距 */
+.temp { 
+    font-size: 6rem; 
+    font-weight: 200; 
+    margin-bottom: 40px;          /* 拉开与下方文字的距离 */
+    line-height: 1;
+}
+
+/* 调整标题文字间距 */
+.location { 
+    font-size: 1.4rem; 
+    opacity: 0.9; 
+    margin-bottom: 50px;          /* 拉开与下方胶囊的距离 */
+    letter-spacing: 8px;          /* 字与字之间拉开 */
+}
+
+/* 胶囊部分也改为纯边框模式 */
+.status-pill {
+    display: inline-block;
+    background: transparent;      /* 取消黑色背景 */
+    border: 1px solid rgba(255, 255, 255, 0.5); /* 给胶囊也加一个细边框 */
+    padding: 12px 40px; 
+    border-radius: 40px;
+    font-size: 1.3rem;
+}
+
+/* 底部时间再往下挪挪 */
+.update-time { 
+    font-size: 0.8rem; 
+    opacity: 0.5; 
+    margin-top: 60px; 
+    letter-spacing: 1px;
+}
+    </style>
+</head>
+<body>
+    <div class="glass-card">
+        <div class="temp">13.6°C</div>
+        <div class="status-pill">☀️ 晴朗</div>
+        <div class="location">长沙</div>
+        
+        <div class="update-time">自动更新于: 2026-01-08</div>
+    </div>
+</body>
+</html>
