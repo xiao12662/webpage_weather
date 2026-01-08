@@ -1,33 +1,33 @@
-name: GlassWeatherSiteUpdate
+name: UpdateWeatherSite
 
 on:
   push:
   schedule:
-    - cron: '20 00 * * *' # 每天北京时间 08:20
+    - cron: '20 00 * * *'
 
+# 第 12 行通常在这里，确保 permissions 和 contents 之间缩进正确
 permissions:
   contents: write
 
 jobs:
-  update-site:
+  run_bot:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-      - name: Install dependencies
+      - name: 检出代码
+        uses: actions/checkout@v3
+
+      - name: 安装依赖
         run: pip install requests
-      - name: Run Update
+
+      - name: 运行脚本
         env:
           BARK_KEY: ${{ secrets.BARK_KEY }}
         run: python index.py
-     - name: 自动提交网页更新
+
+      - name: 自动提交更新
         run: |
           git config --global user.name "WeatherBot"
           git config --global user.email "bot@github.com"
           git add index.html
-          # 下面这行很重要：即使没有变化也不报错
-          git commit -m "Auto Update: $(date)" || echo "No changes to commit"
+          git commit -m "Auto Update Weather" || echo "No changes"
           git push
