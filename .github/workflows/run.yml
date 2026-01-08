@@ -23,10 +23,11 @@ jobs:
         env:
           BARK_KEY: ${{ secrets.BARK_KEY }}
         run: python index.py
-      - name: Commit and Push
+     - name: 自动提交网页更新
         run: |
-          git config --global user.name "Weather-Bot"
+          git config --global user.name "WeatherBot"
           git config --global user.email "bot@github.com"
           git add index.html
-          git commit -m "Auto-update weather display" || echo "No changes"
+          # 下面这行很重要：即使没有变化也不报错
+          git commit -m "Auto Update: $(date)" || echo "No changes to commit"
           git push
