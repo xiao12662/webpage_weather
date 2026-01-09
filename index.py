@@ -41,9 +41,16 @@ def main():
         # 兜底：如果没有模板，就打印错误
         print("错误：找不到 template.html 文件！")
         return
+    
+    from datetime import datetime, timedelta, timezone
 
-    # 4. 替换 (精准匹配 {temp}, {code}, {update_time})
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    # 1. 定义北京时区 (UTC+8)
+    beijing_time = timezone(timedelta(hours=8))
+
+    # 2. 获取当前的北京时间
+    # 替换掉原来的 now = datetime.now()...
+
+    now = datetime.now(beijing_time).strftime('%Y-%m-%d %H:%M:%S')
     content = content.replace('{temp}', str(curr['temperature']))
     content = content.replace('{code}', weather_display)
     content = content.replace('{update-time}', now)
