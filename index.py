@@ -46,7 +46,7 @@ def main():
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     content = content.replace('{temp}', str(curr['temperature']))
     content = content.replace('{code}', weather_display)
-    content = content.replace('{update_time}', now)
+    content = content.replace('{update-time}', now)
 
     # 5. 写入展示用的 index.html
     with open('index.html', 'w', encoding='utf-8') as f:
