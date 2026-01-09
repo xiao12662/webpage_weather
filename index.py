@@ -44,16 +44,21 @@ def main():
     
     from datetime import datetime, timedelta, timezone
 
-    # 1. 定义北京时区 (UTC+8)
+    # 1. 获取北京时间
     beijing_time = timezone(timedelta(hours=8))
+    now_bj = datetime.now(beijing_time)
 
-    # 2. 获取当前的北京时间
-    # 替换掉原来的 now = datetime.now()...
+    # 2. 强行将分钟、秒、毫秒设为 0 (抹零)
+    # 这样无论它是 10:05 还是 10:15 跑的，都会显示 10:00:00
+    fixed_now = now_bj.replace(minute=0, second=0, microsecond=0)
+
+    # 3. 格式化输出
+    update_time_str = fixed_now.strftime('%Y-%m-%d %H:%M:%S')
 
     now = datetime.now(beijing_time).strftime('%Y-%m-%d %H:%M:%S')
     content = content.replace('{temp}', str(curr['temperature']))
     content = content.replace('{code}', weather_display)
-    content = content.replace('{update-time}', now)
+    content = content.replace('{update-time}', update_time_str)
 
     # 5. 写入展示用的 index.html
     with open('index.html', 'w', encoding='utf-8') as f:
