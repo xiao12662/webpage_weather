@@ -56,7 +56,11 @@ def main():
     update_time_str = fixed_now.strftime('%Y-%m-%d %H:%M:%S')
 
     now = datetime.now(beijing_time).strftime('%Y-%m-%d %H:%M:%S')
-    content = content.replace('{temp}', str(curr['temperature']))
+    # 确保是从 api 返回的 json 里实时获取的
+    temp = curr['temperature'] 
+
+    # 确保这一行没有被删掉或注释掉
+    content = content.replace('{temp}', str(temp))
     content = content.replace('{code}', weather_display)
     content = content.replace('{update-time}', update_time_str)
 
