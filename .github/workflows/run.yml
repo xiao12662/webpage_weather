@@ -1,9 +1,10 @@
 name: UpdateWeatherSite
 
 on:
-  push:
+  push:                   # 只要你修改代码提交，就会触发更新
   schedule:
-    - cron: '20 00 * * *'
+    - cron: '0 * * * *'   # 核心修改：这代表每个整点（0分）都会自动运行一次
+  workflow_dispatch:      # 允许你在 Actions 页面手动点击运行
 
 # 第 12 行通常在这里，确保 permissions 和 contents 之间缩进正确
 permissions:
