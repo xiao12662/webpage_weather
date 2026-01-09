@@ -27,6 +27,7 @@ def main():
     url = "https://api.open-meteo.com/v1/forecast?latitude=28.23&longitude=112.94&current_weather=true"
     res = requests.get(url).json()
     curr = res['current_weather']
+    temp = curr['temperature']
     
     # 2. 翻译天气
     status_text, emoji = get_weather_info(curr['weathercode'])
